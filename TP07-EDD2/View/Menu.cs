@@ -1,4 +1,5 @@
 using TP07_EDD2.Controllers;
+using TP07_EDD2.Models;
 
 namespace TP07_EDD2.View;
 
@@ -14,8 +15,9 @@ public static class Menu
         }
     }
 
-    public static void ShowOptions()
+    private static void ShowOptions()
     {
+        Console.Clear();
         Console.WriteLine("0. Sair.");
         Console.WriteLine("1. Adicionar livro.");
         Console.WriteLine("2. Pesquisar livro (sintético).");
@@ -60,31 +62,125 @@ public static class Menu
 
     private static void AddBook()
     {
+        var isbn = ReadInteger("Insira o ISBN (13 dígitos): ");
+        Console.Write("Insira o titulo: ");
+        var title = Console.ReadLine();
+        Console.Write("Insira o autor: ");
+        var author = Console.ReadLine();
+        Console.Write("Insira a editora: ");
+        var publisher =  Console.ReadLine();
         
+        var book = new Book(title, author, publisher, isbn);
+        
+        Books.AddBook(book);
+        Console.Clear();
+        Console.WriteLine("Livro adicionado com sucesso.");
+        Console.WriteLine(book.ToString());
+        Console.WriteLine("Clique qualquer tecla para retornar.");
+        Console.ReadKey();
     }
 
     private static void SearchBook()
     {
-        
+        Console.Write("Insira o titulo: ");
+        var book = Books.SearchBook(new Book(Console.ReadLine()));
+        if (book == null)
+        {
+            Console.WriteLine("Nenhum livro foi encontrado.");
+            Console.WriteLine("Clique qualquer tecla para retornar.");
+            Console.ReadKey();
+            return;
+        }
+        Console.WriteLine(book.ToString());
+        Console.WriteLine("Clique qualquer tecla para retornar.");
+        Console.ReadKey();
     }
 
     private static void SearchBookAnalytic()
     {
-        
+        Console.Write("Insira o titulo: ");
+        var book = Books.SearchBook(new Book(Console.ReadLine()));
+        if (book == null)
+        {
+            Console.WriteLine("Nenhum livro foi encontrado.");
+            Console.WriteLine("Clique qualquer tecla para retornar.");
+            Console.ReadKey();
+            return;
+        }
+        Console.WriteLine(book.FullDetails());
+        Console.WriteLine("Clique qualquer tecla para retornar.");
+        Console.ReadKey();
     }
 
     private static void AddCopy()
     {
-        
+        Console.Write("Insira o titulo: ");
+        var book = Books.SearchBook(new Book(Console.ReadLine()));
+        if (book == null)
+        {
+            Console.WriteLine("Nenhum livro foi encontrado.");
+            Console.WriteLine("Clique qualquer tecla para retornar.");
+            Console.ReadKey();
+            return;
+        }
+        book.AddCopies(new Copy());
+        Console.WriteLine("Clique qualquer tecla para retornar.");
+        Console.ReadKey();
     }
 
     private static void AddLoan()
     {
-        
+        Console.Write("Insira o titulo: ");
+        var book = Books.SearchBook(new Book(Console.ReadLine()));
+        if (book == null)
+        {
+            Console.WriteLine("Nenhum livro foi encontrado.");
+            Console.WriteLine("Clique qualquer tecla para retornar.");
+            Console.ReadKey();
+            return;
+        }
+
+        var copy = book.Copies.FirstOrDefault(x => x.IsAvailable());
+        if (copy == null)
+        {
+            Console.WriteLine("Nenhum exemplar disponível foi encontrado.");
+            Console.WriteLine("Clique qualquer tecla para retornar.");
+            Console.ReadKey();
+            return;
+        }
+        copy.Loan();
+        Console.Clear();
+        Console.WriteLine("Empréstimo iniciado com sucesso. Unidade: ");
+        Console.WriteLine(copy.ToString());
+        Console.WriteLine("Clique qualquer tecla para retornar.");
+        Console.ReadKey();
     }
 
     private static void AddRetrieve()
     {
-        
+        Console.Write("Insira o titulo: ");
+        var book = Books.SearchBook(new Book(Console.ReadLine()));
+        if (book == null)
+        {
+            Console.WriteLine("Nenhum livro foi encontrado.");
+            Console.WriteLine("Clique qualquer tecla para retornar.");
+            Console.ReadKey();
+            return;
+        }
+
+        var copy =  book.Copies.FirstOrDefault(x => !x.IsAvailable());
+        if (copy == null)
+        {
+            Console.WriteLine("Nenhum exemplar emprestado foi encontrado.");
+            Console.WriteLine("Clique qualquer tecla para retornar.");
+            Console.ReadKey();
+            return;
+        }
+        copy.Retrieve();
+        Console.Clear();
+        Console.WriteLine("Exemplar devolvido com sucesso. Unidade: ");
+        Console.WriteLine(copy.ToString());
+        Console.WriteLine("Clique qualquer tecla para retornar.");
+        Console.ReadKey();
     }
 }

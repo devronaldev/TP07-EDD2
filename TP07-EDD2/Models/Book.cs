@@ -10,6 +10,19 @@ public class Book
     public string Publisher { get; set; }
     public List<Copy> Copies { get; set; }
 
+    public Book(string title)
+    {
+        Title = title;
+    }
+
+    public Book(string title, string author, string publisher, int isbn) : this(title)
+    {
+        Author = author;
+        Publisher = publisher;
+        ISBN = isbn;
+        Copies = new List<Copy>();
+    }
+
     public void AddCopies(Copy copy)
     {
         Copies.Add(copy);
@@ -36,9 +49,7 @@ public class Book
         {
             return 0;
         }
-        
-        // ReSharper disable once PossibleLossOfFraction
-        return (QtyAvailable() / QtyCopies()) * 100;
+        return ((double) QtyAvailable())/ QtyCopies() * 100;
     }
 
     public override string ToString()

@@ -41,7 +41,7 @@ public static class Menu
         }
     }
 
-    public static void SwitchOptions(int option)
+    private static void SwitchOptions(int option)
     {
         switch (option)
         {
@@ -58,32 +58,32 @@ public static class Menu
         }
     }
 
-    public static void AddBook()
+    private static void AddBook()
     {
         
     }
 
-    public static void SearchBook()
+    private static void SearchBook()
     {
         
     }
 
-    public static void SearchBookAnalytic()
+    private static void SearchBookAnalytic()
     {
         
     }
 
-    public static void AddCopy()
+    private static void AddCopy()
     {
         
     }
 
-    public static void AddLoan()
+    private static void AddLoan()
     {
         
     }
 
-    public static void AddRetrieve()
+    private static void AddRetrieve()
     {
         
     }

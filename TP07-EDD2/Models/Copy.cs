@@ -19,11 +19,11 @@ public class Copy
         
     }
 
-    public bool Loan(Loan loan)
+    public bool Loan()
     {
         if (IsAvailable())
         {
-            Loans.Add(loan);
+            Loans.Add(new Loan());
             return true;
         }
         return false;
